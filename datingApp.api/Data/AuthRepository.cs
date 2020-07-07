@@ -53,12 +53,12 @@ namespace datingApp.api.Data
             return user;
         }
 
-        private void CreatePasswordHash(string passwerd, out byte[] passwerdHash, out byte[] passwerdSalt)
+        private void CreatePasswordHash(string password, out byte[] passwerdHash, out byte[] passwerdSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA256())
             {
                 passwerdSalt = hmac.Key;
-                passwerdHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passwerd)); 
+                passwerdHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)); 
             }
         }
 
