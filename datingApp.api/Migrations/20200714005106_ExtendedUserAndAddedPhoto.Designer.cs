@@ -9,7 +9,7 @@ using datingApp.api.Data;
 namespace datingApp.api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200621033602_ExtendedUserAndAddedPhoto")]
+    [Migration("20200714005106_ExtendedUserAndAddedPhoto")]
     partial class ExtendedUserAndAddedPhoto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,7 +76,7 @@ namespace datingApp.api.Migrations
                     b.Property<string>("KnownAs")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastActivate")
+                    b.Property<DateTime>("LastActive")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LookingFor")
