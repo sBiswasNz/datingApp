@@ -48,6 +48,7 @@ namespace datingApp.api.Controllers
                 return Unauthorized();
             
             var userFromRepo = await _repo.GetUser(id);
+            
             _mapper.Map(userForUpdateDto, userFromRepo);
 
             if (await _repo.SaveAll())

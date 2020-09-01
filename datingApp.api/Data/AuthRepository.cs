@@ -15,7 +15,7 @@ namespace datingApp.api.Data
         }
         public async Task<User> Login(string username, string passwerd)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Name == username); 
+            var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Name == username); 
             
             if( user == null)
                 return null; 

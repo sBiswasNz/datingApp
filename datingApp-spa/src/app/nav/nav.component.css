@@ -1,3 +1,9 @@
 .dropdown-toggle, .dropdown-item, .nav-item {
     cursor: pointer;
 }
+
+.dropdown img {
+    max-width: 50px;
+    border: 1px solid gray; 
+    display: inline;
+}
