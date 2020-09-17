@@ -13,24 +13,24 @@ namespace datingApp.api.Data
             _context = context;
 
         }
-        public async Task<User> Login(string username, string passwerd)
+        public async Task<User> Login(string username, string password)
         {
             var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Name == username); 
             
             if( user == null)
                 return null; 
 
-            if ( ! VarifyPasswordHash( passwerd, user.PasswordHash, user.PasswordSalt))
+            if ( ! VarifyPasswordHash( password, user.PasswordHash, user.PasswordSalt))
                 return null; 
 
             return user; 
         }
 
-        private bool VarifyPasswordHash(string passwerd, byte[] passwordHash, byte[] passwordSalt)
+        private bool VarifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA256(passwordSalt))
             {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passwerd)); 
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)); 
                 for (int i = 0; i<computedHash.Length; i++)
                 {
                     if (computedHash[i] != passwordHash[i]) return false; 
@@ -39,13 +39,13 @@ namespace datingApp.api.Data
             return true; 
         }
 
-        public async Task<User> Register(User user, string passwerd)
+        public async Task<User> Register(User user, string password)
         {
-            byte [] passwerdHash, passwerdSalt;
-            CreatePasswordHash(passwerd, out passwerdHash, out passwerdSalt);
+            byte [] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
-            user.PasswordHash = passwerdHash;
-            user.PasswordSalt = passwerdSalt;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();  
@@ -53,12 +53,12 @@ namespace datingApp.api.Data
             return user;
         }
 
-        private void CreatePasswordHash(string password, out byte[] passwerdHash, out byte[] passwerdSalt)
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA256())
             {
-                passwerdSalt = hmac.Key;
-                passwerdHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)); 
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)); 
             }
         }
 
@@ -66,7 +66,7 @@ namespace datingApp.api.Data
         {
             if (await _context.Users.AnyAsync(x => x.Name == username))
                 return true;
-            return false; 
+            return false;
         }
     }
 }
