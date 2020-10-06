@@ -8,9 +8,16 @@
     </ul>
   </div>
   <div class="card-body p-1">
-    <h6 class="card-title text-center mb-1"><i class="fa fa-user"></i>
+    <h5 class="card-title text-center mb-1"><i class="fa fa-user"></i>
       {{user.knownAs}},{{user.age}}
-    </h6>
-    <p class="card-text text-meted text-center">{{user.city}}</p>
+    </h5>
+    
+    <span>Lives in: <h6>{{user.city}}</h6> </span> 
+    <span><h6>Age: {{user.age}}</h6></span>
+    <span>Creted: {{user.created |timeago}}</span>
+    <span>Active: {{user.lastActive |timeago}}</span>
+    
+    
+    
   </div>
 </div>
